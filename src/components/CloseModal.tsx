@@ -18,3 +18,4 @@ const CloseModal: FC<CloseModalProps> = ({}) => {
 }
 
 export default CloseModal
+
