@@ -34,11 +34,9 @@ const page = async ({ params }: PageProps) => {
       <Editor subredditId={subreddit.id} />
 
       <div className="w-full flex justify-end">
-        <Button
-          type="submit"
-          className="w-full"
-          form="subreddit-post-form"
-        ></Button>
+        <Button type="submit" className="w-full" form="subreddit-post-form">
+          Post
+        </Button>
       </div>
     </div>
   );
