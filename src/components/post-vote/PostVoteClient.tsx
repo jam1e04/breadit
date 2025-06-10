@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { PostVoteRequest } from "@/lib/validators/vote";
 import axios, { AxiosError } from "axios";
+import { toast } from "../../hooks/use-toast";
 
 interface PostVoteClientProps {
   postId: string;
@@ -31,7 +32,7 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
     setCurrentVote(initialVote);
   }, [initialVote]);
 
-  const {} = useMutation({
+  const { mutate: vote } = useMutation({
     mutationFn: async (voteType: VoteType) => {
       const payload: PostVoteRequest = {
         postId,
@@ -39,6 +40,40 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
       };
 
       await axios.patch("/api/subreddit/post/vote", payload);
+    },
+    onError: (err, voteType) => {
+      if (voteType === "UP") setVotesAmt((prev) => prev - 1);
+      else setVotesAmt((prev) => prev + 1);
+
+      // reset current vote
+      setCurrentVote(prevVote);
+
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 401) {
+          return loginToast();
+        }
+      }
+
+      return toast({
+        title: "Something went wrong.",
+        description: "Your vote was not registered. Please try again.",
+        variant: "destructive",
+      });
+    },
+
+    onMutate: (type: VoteType) => {
+      if (currentVote === type) {
+        // User is voting the same way again, so remove their vote
+        setCurrentVote(undefined);
+        if (type === "UP") setVotesAmt((prev) => prev - 1);
+        else if (type === "DOWN") setVotesAmt((prev) => prev + 1);
+      } else {
+        // User is voting in the opposite direction, so subtract 2
+        setCurrentVote(type);
+        if (type === "UP") setVotesAmt((prev) => prev + (currentVote ? 2 : 1));
+        else if (type === "DOWN")
+          setVotesAmt((prev) => prev - (currentVote ? 2 : 1));
+      }
     },
   });
 
