@@ -14,7 +14,7 @@ export default async function Home() {
         {/* display either custom feed or general feed */}
         {/* @ts-expect-error server component */}
         {session ? <CustomFeed /> : <GeneralFeed />}
-        feed
+
         {/* subreddit info */}
         <div className="overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last">
           <div className="bg-emerald-100 px-6 py-4">
