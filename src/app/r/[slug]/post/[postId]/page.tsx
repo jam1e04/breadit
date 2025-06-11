@@ -8,6 +8,7 @@ import { ArrowBigDown, ArrowBigUp, Loader2 } from "lucide-react";
 import { Suspense } from "react";
 import PostVoteServer from "@/components/post-vote/PostVoteServer";
 import EditorOutput from "@/components/EditorOutput";
+import CommentsSection from "@/components/CommentsSection";
 
 interface pageProps {
   params: { postId: string };
@@ -59,6 +60,15 @@ const page = async ({ params }: pageProps) => {
             {post?.title ?? cachedPost.title}
           </h1>
           <EditorOutput content={post?.content ?? cachedPost.content} />
+
+          <Suspense
+            fallback={
+              <Loader2 className="h-5 w-5 animate-spin text-zinc-500" />
+            }
+          >
+            {/* @ts-ignore-error server component */}
+            <CommentsSection postId={post?.id ?? cachedPost.id} />
+          </Suspense>
         </div>
       </div>
     </div>
