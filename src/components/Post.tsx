@@ -7,7 +7,6 @@ import Link from "next/link";
 import { FC, useRef } from "react";
 import EditorOutput from "./EditorOutput";
 import PostVoteClient from "./post-vote/PostVoteClient";
-import { type } from "os";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -38,7 +37,7 @@ const Post: FC<PostProps> = ({
         <PostVoteClient
           postId={post.id}
           initialVote={_currentVote?.type}
-          initialVoteAmt={_votesAmt}
+          initialVotesAmt={_votesAmt}
         />
 
         <div className="w-0 flex-1">
