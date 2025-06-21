@@ -9,22 +9,22 @@ import { useToast } from '@/hooks/use-toast';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
-const UserAuthForm: FC<UserAuthFormProps> = ((className, ...props) => {
+const UserAuthForm: FC<UserAuthFormProps> = ({className, ...props})=> {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { toast } = useToast()
 
-  const loginWithGoogle = async () => {
+  const loginWithGithub = async () => {
     setIsLoading(true)
 
     try {
-      throw new Error('Failed to sign in with Google')
+      signIn('github')
     } catch (error) {
       // TODO: Handle error
-      console.log(error)
+      
       toast({
         title: 'There was a problem.',
-        description: 'There was a problem logging in with Google. Please try again later.',
+        description: 'There was a problem logging in with Github. Please try again later.',
         variant: 'destructive'
       })
     } finally {
@@ -34,9 +34,9 @@ const UserAuthForm: FC<UserAuthFormProps> = ((className, ...props) => {
 
   return (
     <div className={cn('flex justify-center', className)} {...props}>
-      <Button onClick={loginWithGoogle} isLoading={isLoading} size='sm' className='w-full'>{isLoading ? null : <Icons.google className='h-4 w-4 mr-2'></Icons.google>}Google</Button>
+      <Button onClick={loginWithGithub} isLoading={isLoading} size='sm' className='w-full'>{isLoading ? null : <Icons.github className='h-4 w-4 mr-2'></Icons.github>}Google</Button>
     </div>
   )
-})
+}
 
 export default UserAuthForm
