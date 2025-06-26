@@ -2,9 +2,13 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/db";
 import PostFeed from "./PostFeed";
 import { getAuthSession } from "@/lib/auth";
+import { notFound } from "next/navigation";
 
 const CustomFeed = async () => {
   const session = await getAuthSession();
+
+    // only rendered if session exists, so this will not happen
+    if (!session) return notFound()
 
   const followedCommunities = await db.subscription.findMany({
     where: {

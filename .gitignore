@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 忽略所有自动生成的迁移文件和数据库客户端
+prisma/migrations/

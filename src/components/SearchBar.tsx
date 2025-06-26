@@ -16,7 +16,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { Users } from "lucide-react";
 import debounce from "lodash.debounce";
 import { useOnClickOutside } from "@/hooks/use-on-click-outside";
-import { set } from "date-fns";
 
 interface SearchBarProps {}
 
