@@ -108,13 +108,18 @@ export const Editor: React.FC<EditorProps> = ({ subredditId }) => {
               uploader: {
                 async uploadByFile(file: File) {
                   // upload to uploadthing
-                  const [res] = await uploadFiles([file], "imageUploader");
+                  const response = await uploadFiles({
+                    files: [file],
+                    endpoint: "imageUploader"  // 必须和你的 FileRouter 定义一致
+                  });
+                  // const [res] = await uploadFiles([file], "imageUploader");
 
                   return {
                     success: 1,
                     file: {
-                      url: res.fileUrl,
+                      url: response[0].url,
                     },
+                    
                   };
                 },
               },
